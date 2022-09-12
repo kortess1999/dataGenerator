@@ -11,30 +11,23 @@ int main()
     ofstream fout;
     string fileName;
     long long totalSize;
-    int newNumber, numLen;
+    int newNumber;
     float mbSize;
     srand(time(0));
     
     cout << "Input fileName\n";
     cin >> fileName;
-    fout.open(fileName);
+    fout.open(fileName, ios::binary | ios::out);
 
     cout << "Input total MB size\n";
     cin >> mbSize;
-    totalSize = int(mbSize * 1024 * 1024);
+    totalSize = long long(mbSize * 1024 * 1024);
 
     while (fout.tellp() < totalSize) {
-        newNumber = int(rand() % 10000);
-        if (newNumber > 0) {
-            numLen = max(int(log10(newNumber)), 1) + 2;
-        }
-        else {
-            numLen = max(int(log10(newNumber)), 1) + 2;
-        }
-
-        fout << newNumber << " ";
+        newNumber = int(rand());
+        fout.write((char*)&newNumber,sizeof(int));
     }
-    cout << "Generation finished with len =" << fout.tellp() << " " << totalSize;
+    cout << "Generation finished!";
     fout.close();
 }
 
